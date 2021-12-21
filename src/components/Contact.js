@@ -1,17 +1,24 @@
 import React from "react";
+import { LinkedIn } from "@material-ui/icons";
+import { GitHub } from "@material-ui/icons";
+import { contact } from "../data";
+import { MailIcon } from "@heroicons/react/solid";
+import { UserIcon } from "@heroicons/react/solid";
 
-export default function Contact() {
-    const [name, setName] = React.useState("");
-    const [email, setEmail] = React.useState("");
-    const [message, setMessage] = React.useState("");
+export default function Contact(){
+  const [name, setName] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  if (!contact.email) return null
 
   function encode(data) {
-    return Object.keys(data)
-      .map(
-        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
-      )
-      .join("&");
+  return Object.keys(data)
+    .map(
+      (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key])
+    )
+    .join("&");
   }
+
   function handleSubmit(e) {
     e.preventDefault();
     fetch("/", {
@@ -22,11 +29,31 @@ export default function Contact() {
       .then(() => alert("Message sent!"))
       .catch((error) => alert(error));
   }
+
+
   return (
-    <section id="contact" className="relative">
-      <div className="container px-5 py-10 mx-auto flex sm:flex-nowrap flex-wrap">
-        <div className="lg:w-2/3 md:w-1/2 bg-gray-900 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
-          <iframe
+    <section id='contact'>
+      <div className="container px-5 py-10 mx-auto">
+      <div className="text-center mb-20">
+        <UserIcon className="w-10 inline-block mb-4" />
+          <h1 className="sm:text-4xl text-3xl font-medium title-font mb-4 text-white">
+            Contact Me
+          </h1>
+        </div>
+        <div className="flex justify-center flex-wrap lg:w-1/2 sm:mx-auto sm:mb-2 -m-2">
+          <a href={`mailto:${contact.email}`}>
+            <MailIcon className="text-white-600 w-10 h-10 flex-shrink-0 mr-4" />
+          </a>
+          <a href={`mailto:${contact.linkedin}`}>
+            <LinkedIn className="text-white-600 w-20 h-20 flex-shrink-0 mr-4" />
+          </a>
+          <a href={`mailto:${contact.github}`}>
+            <GitHub className="text-white-600 w-20 h-20 flex-shrink-0 mr-4" />
+          </a>
+        </div>
+       <div className="container px-5 py-10 mx-auto flex sm:flex-nowrap flex-wrap">
+         <div className="lg:w-2/3 md:w-1/2 bg-gray-900 rounded-lg overflow-hidden sm:mr-10 p-10 flex items-end justify-start relative">
+           <iframe
             width="100%"
             height="100%"
             title="map"
@@ -44,7 +71,7 @@ export default function Contact() {
               </h2>
               <p className="mt-1">
                 23 Germain Cir. <br />
-                Brampton, ON L6X0B3
+                Brampton, ON L6X 0B3
               </p>
             </div>
             <div className="lg:w-1/2 px-6 mt-4 lg:mt-0">
@@ -67,12 +94,8 @@ export default function Contact() {
           onSubmit={handleSubmit}
           className="lg:w-1/3 md:w-1/2 flex flex-col md:ml-auto w-full md:py-8 mt-8 md:mt-0">
           <h2 className="text-white sm:text-4xl text-3xl mb-1 font-medium title-font">
-            Hire Me
+            Write Here
           </h2>
-          <p className="leading-relaxed mb-5">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Illum
-            suscipit officia aspernatur veritatis. Asperiores, aliquid?
-          </p>
           <div className="relative mb-4">
             <label htmlFor="name" className="leading-7 text-sm text-gray-400">
               Name
@@ -117,6 +140,8 @@ export default function Contact() {
           </button>
         </form>
       </div>
+        
+      </div>
     </section>
-  );
+  )
 }
